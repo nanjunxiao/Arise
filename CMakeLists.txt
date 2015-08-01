@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 2.8)
+
+PROJECT(Arise)
+
+SET(CMAKE_BUILD_TYPE "Release")
+
+SET(MASK_Htmlcxx ${CMAKE_SOURCE_DIR}/external/htmlcxx)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/external)
+
+LINK_DIRECTORIES(${MASK_Htmlcxx})
+
+SET(Arise_Htmltidy ${CMAKE_SOURCE_DIR}/external/htmltidy)
+
+LINK_DIRECTORIES(${Arise_Htmltidy})
+
+IF(CMAKE_BUILD_TYPE MATCHES "Release")
+	INCLUDE (CTest)
+  ENABLE_TESTING()
+	ADD_SUBDIRECTORY(src)
+	ADD_SUBDIRECTORY(test)
+	MESSAGE(STATUS "Release...")
+	ADD_SUBDIRECTORY(external)
+ELSE()
+  INCLUDE (CTest)
+  ENABLE_TESTING()
+	ADD_SUBDIRECTORY(src)
+	ADD_SUBDIRECTORY(test)
+	MESSAGE(STATUS "Debug...")
+	ADD_SUBDIRECTORY(external)
+ENDIF()
+
+SET(CMAKE_INSTALL_PREFIX ".")
